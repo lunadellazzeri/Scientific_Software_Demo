@@ -15,6 +15,7 @@ class TestCosmology:
     rho_tolerance = 1e-27
     z_range = np.array([0.0, 0.5, 1.0])
     H_expect = np.array([70, 91.60, 123.24])
+    rho_expect = np.array([9.20e-27, 1.58e-26, 2.85e-26])
 
     def test_hubble(self):
         H_vals = hubble(self.z_range, self.fid_cosmo)
