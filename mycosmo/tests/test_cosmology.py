@@ -1,7 +1,7 @@
 import numpy as np
 import numpy.testing as npt
 
-from mycosmo.cosmology import hubble, critical_density
+from mycosmo.cosmology import critical_density, hubble
 
 
 class TestCosmology:
@@ -28,7 +28,7 @@ class TestCosmology:
                 f"{self.H_tolerance} decimal places."
             ),
         )
-    
+
     def test_critical_density(self):
         rho_vals = critical_density(self.z_range, self.fid_cosmo)
 

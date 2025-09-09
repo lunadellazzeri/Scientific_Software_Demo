@@ -1,0 +1,26 @@
+Results of doctest builder run on 2025-09-09 14:00:27
+=====================================================
+
+Document: mycosmo.cosmology
+---------------------------
+**********************************************************************
+File "..\..\mycosmo\cosmology.py", line ?, in default
+Failed example:
+    hubble(0.0, cosmo_dict)
+Expected:
+    70.0
+Got:
+    np.float64(70.0)
+**********************************************************************
+1 items had failures:
+   1 of   3 in default
+3 tests in 1 items.
+2 passed and 1 failed.
+***Test Failed*** 1 failures.
+
+Doctest summary
+===============
+    3 tests
+    1 failure in tests
+    0 failures in setup code
+    0 failures in cleanup code
