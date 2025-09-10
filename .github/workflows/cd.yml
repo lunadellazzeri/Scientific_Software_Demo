@@ -1,0 +1,66 @@
+name: CD
+
+on:
+  push:
+    branches:
+     - main
+
+#Version like the ci.yml : build the documentation two times : for macOs and Ubuntu so not really practical
+#That's why as we need only one machine, we specify either ubuntu-latest or macos-latest but not both
+jobs:
+  docs:
+    name: Deploy API Documentation
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Check Python version
+        run: python --version    
+      - name: Install dependencies
+        run: python -m pip install myst-parser numpy numpydoc sphinx sphinx-book-theme
+
+#other possibility : no matrix, "raw" version, with one version of Python
+#jobs:
+  #docs:
+    #name: Deploy API Documentation
+    #runs-on: ubuntu-latest
+    
+    #steps:
+      #- name: Checkout
+        #uses: actions/checkout@v3
+
+      #- name: Set up Python
+        #uses: actions/setup-python@v4
+        #with:
+          #python-version: "3.11"
+
+      #- name: Check Python version
+        #run: python --version    
+
+      #- name: Install dependencies
+        #run: python -m pip install myst-parser numpy numpydoc sphinx sphinx-book-theme
+
+      - name: Build API documentation
+        run: |
+          sphinx-apidoc -Mfeo docs/source mycosmo
+          sphinx-build docs/source docs/build
+          
+      - name: Deploy API documentation
+        uses: peaceiris/actions-gh-pages@v3.5.9
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/build
+
